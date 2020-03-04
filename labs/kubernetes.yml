@@ -22,7 +22,7 @@ services:
       - 30080-30100:30080-30100
     environment:
       TRAINING: siarhei_beliakou/playpit-labs-k8s/master
-    labels:
+    labels: &labels
       training: kubernetes
       lab: yes
     privileged: true
@@ -44,8 +44,7 @@ services:
     environment:
       TRAINING: siarhei_beliakou/playpit-labs-k8s/master
     labels:
-      training: kubernetes
-      lab: yes
+      <<: *labels
     privileged: true
     depends_on:
       - master
@@ -56,13 +55,11 @@ services:
 volumes:
   containerd-master:
     labels:
-      training: kubernetes
-      lab: yes
+      <<: *labels
 
   containerd-node01:
     labels:
-      training: kubernetes
-      lab: yes
+      <<: *labels
 
 networks:
   k8slocal:
@@ -73,5 +70,4 @@ networks:
       - subnet: 172.31.0.0/16
         gateway: 172.31.0.1
     labels:
-      training: kubernetes
-      lab: yes
+      <<: *labels

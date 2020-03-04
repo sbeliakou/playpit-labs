@@ -21,8 +21,8 @@
 ```
 
 ### Available Trainings
-- kubernetes
-
+- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png" style="height: 1em;"> **kubernetes**
+- <i class="fab fa-docker"></i> **docker**
 
 ### Screen shots
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.png)
