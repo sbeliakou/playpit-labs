@@ -8,7 +8,7 @@
 - Tracking overall progress
 - Hundreads of scenarios of development and troubleshooting
 - Changeable environment for various use cases
-- Full of usefull documentation
+- Full of useful documentation
 
 ### Architecture Specifics
 - Docker-based (systemd) containers
