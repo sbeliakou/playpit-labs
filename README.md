@@ -1,17 +1,35 @@
-# Playpit Labs: Local Hands-on Playgrounds
+# Playpit Labs: Local Hands-on Playground
+
+### Main Features:
+- In-browser terminal window
+- Integrated browser window facility
+- Easy navigation between tasks/scenarios
+- Instant feedback with scoring results
+- Tracking overall progress
+- Hundreads of scenarios of development and troubleshooting
+- Changeable environment for various use cases
+
+### Architecture Specifics
+- Docker-based (systemd) containers
+- Pre-baked configuration (as per lab purpose)
+- Fast and easy rolling out
 
 ## System Requirements:
+Please ensure that your local station supports those requirements before using current product:
 
 - [Docker]() (19+) or [Docker Desktop](https://www.docker.com/products/docker-desktop) (2.2+) installed 
 - [docker-compose](https://docs.docker.com/compose/install/) (1.25+) installed
 
 ### Usage:
 
+Here's a list of commands which brings this stand up and terminate local infrastructure.
+
 ```sh
 ./start <training_name>
 ./stop
 ```
 
+More Details:
 ```sh
 ## Getting Help
 ./start 
