@@ -62,5 +62,6 @@ Lab stand available by following urls:
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/success-window.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/failure-window.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/sample-quiz-1.png)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/allgood.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/progress.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/closed.png)
