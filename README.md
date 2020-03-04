@@ -20,6 +20,10 @@
 ./stop
 ```
 
+### Available Trainings
+- kubernetes
+
+
 ### Screen shots
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/module-start.png)
