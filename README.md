@@ -3,7 +3,7 @@
 ## System Requirements:
 
 - [Docker]() (19+) or [Docker Desktop](https://www.docker.com/products/docker-desktop) (2.2+) installed 
-- docker-compose (1.25+) installed
+- [docker-compose](https://docs.docker.com/compose/install/) (1.25+) installed
 
 ### Usage:
 
