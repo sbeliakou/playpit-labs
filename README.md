@@ -20,6 +20,7 @@ Please ensure that your local station supports those requirements before using c
 
 - [Docker]() (19+) or [Docker Desktop](https://www.docker.com/products/docker-desktop) (2.2+) installed 
 - [docker-compose](https://docs.docker.com/compose/install/) (1.25+) installed
+- Use [Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMIkqeL5LeB6AIVDPlRCh0AhA73EAAYASABEgKGvfD_BwE&gclsrc=aw.ds)/[Chromium](https://www.chromium.org/getting-involved/download-chromium) Browser for stable work
 
 ### Usage:
 
