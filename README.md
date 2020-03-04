@@ -9,7 +9,10 @@
 
 ```sh
 ./start <training_name>
+./stop
+```
 
+```sh
 ## start Docker Lab
 ./start docker
 
@@ -19,6 +22,13 @@
 ## Tearing it All Down
 ./stop
 ```
+
+## Lab URL
+
+Lab stand available by following urls:
+- http://lab.playpit.net:8081/
+- http://localhost:8081/
+
 
 ### Available Trainings
 - **kubernetes**
