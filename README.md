@@ -10,7 +10,7 @@
 - Changeable environment for various use cases
 - Full of useful documentation
 
-### Architecture Specifics
+### Architecture Specifics:
 - Docker-based (systemd) containers
 - Pre-baked configuration (as per lab purpose)
 - Fast and easy rolling out
