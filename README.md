@@ -1,4 +1,4 @@
-# Playpit Labs: Local Hands-on Stads
+# Playpit Labs: Local Hands-on Playgrounds
 
 ## System Requirements:
 
