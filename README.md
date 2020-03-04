@@ -13,6 +13,9 @@
 ```
 
 ```sh
+## Getting Help
+./start 
+
 ## start Docker Lab
 ./start docker
 
