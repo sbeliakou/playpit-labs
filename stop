@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+#   git reset --hard HEAD 1>/dev/null 2>&1
+#   git pull -f 1>/dev/null 2>&1
+# fi
+
+## Removing previous stack, if it is
+docker ps -q --filter label=lab | xargs -r docker rm -f
+docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
+docker network ls --filter label=lab -q | xargs -r docker network rm

@@ -1,0 +1,77 @@
+version: "2.3"
+
+services:
+  master:
+    image: sbeliakou/playpit-labs:kubernetes-master
+    container_name: kubernetes-master
+    hostname: master
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - containerd-master:/var/lib/containerd
+    tmpfs:
+      - /run
+      - /tmp
+    ports:
+      - 80:80
+      - 443:443
+      - 8001:8001
+      - 8022:8022
+      - 9090:9090
+      - 8081:8081
+      - 30080-30100:30080-30100
+    environment:
+      TRAINING: siarhei_beliakou/playpit-labs-k8s/master
+    labels:
+      training: kubernetes
+      lab: yes
+    privileged: true
+    networks:
+      k8slocal:
+        ipv4_address: 172.31.0.2
+
+  node01:
+    image: sbeliakou/playpit-labs:kubernetes-node01
+    container_name: kubernetes-node01
+    hostname: node01
+    volumes:
+      - /lib/modules:/lib/modules:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - containerd-node01:/var/lib/containerd
+    tmpfs:
+      - /run
+      - /tmp
+    environment:
+      TRAINING: siarhei_beliakou/playpit-labs-k8s/master
+    labels:
+      training: kubernetes
+      lab: yes
+    privileged: true
+    depends_on:
+      - master
+    networks:
+      k8slocal:
+        ipv4_address: 172.31.0.3
+
+volumes:
+  containerd-master:
+    labels:
+      training: kubernetes
+      lab: yes
+
+  containerd-node01:
+    labels:
+      training: kubernetes
+      lab: yes
+
+networks:
+  k8slocal:
+    name: playpit-labs-network
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.31.0.0/16
+        gateway: 172.31.0.1
+    labels:
+      training: kubernetes
+      lab: yes

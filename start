@@ -1,0 +1,34 @@
+#!/bin/bash
+
+cd $(dirname $0)
+# if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+#   git reset --hard HEAD 1>/dev/null 2>&1
+#   git pull -f 1>/dev/null 2>&1
+# fi
+
+labName="labs/${1}.yml"
+
+if [ -f ${labName} ]; then
+  ## Removing previous stack
+  docker ps -q --filter label=lab | xargs -r docker rm -f
+  docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
+
+  ## Pulling updates
+  PWD=$PWD docker-compose -f ${labName} pull
+
+  ## Starting New Stack
+  PWD=$PWD docker-compose -f ${labName} up -d --renew-anon-volumes --remove-orphans
+
+  ## It's done
+  echo "Ready! Browse: http://lab.playpit.net:8081"
+  echo
+else
+  echo "Please specify Training name"
+  echo 
+  echo "Usage:"
+  echo "  ./start <training_name>"
+  echo 
+  echo "Available trainings:"
+  ls labs/*.yml | sed 's/labs./  /;s/.yml//'
+  echo
+fi
