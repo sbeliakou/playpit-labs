@@ -26,6 +26,7 @@ services:
       training: kubernetes
       lab: yes
     privileged: true
+    cpus: 1.5
     networks:
       k8slocal:
         ipv4_address: 172.31.0.2
@@ -46,6 +47,7 @@ services:
     labels:
       <<: *labels
     privileged: true
+    cpus: 1.5
     depends_on:
       - master
     networks:

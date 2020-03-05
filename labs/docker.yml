@@ -23,6 +23,7 @@ services:
       TRAINING: siarhei_beliakou/playpit-labs-docker/master
     privileged: true
     network_mode: bridge
+    cpus: 1
     labels: &labels
       project: docker
       lab: yes
