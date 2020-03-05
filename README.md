@@ -22,7 +22,7 @@ Please ensure that your local station supports those requirements before using c
 - [docker-compose](https://docs.docker.com/compose/install/) (1.25+) installed
 - Use [Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=EAIaIQobChMIkqeL5LeB6AIVDPlRCh0AhA73EAAYASABEgKGvfD_BwE&gclsrc=aw.ds)/[Chromium](https://www.chromium.org/getting-involved/download-chromium) Browser for stable work
 
-### Usage:
+## Usage:
 
 Here's a list of commands which brings this stand up and terminate local infrastructure.
 
@@ -53,25 +53,9 @@ Lab stand available by following urls:
 - http://localhost:8081/
 
 
-### Available Trainings and Scopes
-- **kubernetes**
-  - pods
-  - deployments
-  - services
-  - ingress
-  - volumes
-  - configMaps and secretes
-  - helm
-  - etc
-- **docker**
-  - images
-  - containers
-  - volumes
-  - networks
-  - docker-compose
-  - namespaces and cgroups
-  - daemon configuration
-  - etc
+## Available Trainings and Scopes
+- **kubernetes** (pods, deployments, services, ingress, volumes, configMaps and secretes, helm, etc)
+- **docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
 
 ## Screen Shots
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.png)
