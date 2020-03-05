@@ -1,8 +1,8 @@
 # Playpit Labs: Local Hands-on Playground
 
-Locally provisioned interactive Lab Stand which is aimed to work out vide kinds of tasks (investigation, troubleshooting and development) - all about uplifting your hands-on experience. It currently covers such technologies and tools like Docker and Kubernetes. 
+Locally provisioned interactive Lab Stand which is aimed to work out wide range of tasks (investigation, troubleshooting and development) - all about improving your hands-on experience. It currently covers such technologies and tools as Docker and Kubernetes.
 
-Based on scenario-related approach with instant feedback. It will help you to walk through a long road from the beginner to advanced level step by step.
+Based on scenario-related approach with instant feedback, it will help you to walk a long way from the beginner to advanced level step by step.
 
 #### Check it out and try!
 
@@ -12,9 +12,9 @@ Based on scenario-related approach with instant feedback. It will help you to wa
 - Easy navigation between tasks/scenarios
 - Instant feedback with scoring results
 - Tracking overall progress
-- Hundreads of scenarios of development and troubleshooting
+- Hundreds of development and troubleshooting scenarios
 - Changeable environment for various use cases
-- Full of useful documentation
+- Full support of useful documentation
 
 ### Architecture Specifics:
 - Docker-based (systemd) containers (Linux inside!!!)
@@ -22,7 +22,7 @@ Based on scenario-related approach with instant feedback. It will help you to wa
 - Fast and easy rolling out
 
 ## System Requirements:
-Please ensure that your local station supports those requirements before using current product:
+Please ensure that your local station meets the following requirements before using current product:
 
 - [Docker](https://docs.docker.com/install/) (19+) or [Docker Desktop](https://www.docker.com/products/docker-desktop) (2.2+) installed 
 - [docker-compose](https://docs.docker.com/compose/install/) (1.25+) installed
@@ -30,14 +30,14 @@ Please ensure that your local station supports those requirements before using c
 
 ## Usage:
 
-Here's a list of commands which brings this stand up and terminate local infrastructure.
+Here's a list of commands which bring this stand up and terminate local infrastructure.
 
 ```sh
 ./start <training_name>
 ./stop
 ```
 
-More Details:
+More details:
 ```sh
 ## Getting Help
 ./start 
@@ -54,14 +54,14 @@ More Details:
 
 ## Lab URL
 
-Lab stand available by following urls:
+Lab stand is available by the following addresses:
 - http://lab.playpit.net:8081/
 - http://localhost:8081/
 
 
 ## Available Trainings and Scopes
-- **kubernetes** (pods, deployments, services, ingresses, volumes, configMaps and secretes, helm, etc)
-- **docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
+- **Kubernetes** (pods, deployments, services, ingresses, volumes, configMaps and secretes, helm, etc)
+- **Docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
 
 ## Screen Shots
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.png)
