@@ -1,8 +1,12 @@
 # Playpit Labs: Local Hands-on Playground
 
-Locally provisioned interactive Lab Stand which is aimed to work out wide range of tasks (investigation, troubleshooting and development) - all about improving your hands-on experience. It currently covers such technologies and tools as Docker and Kubernetes.
+**Playpit-Labs** is a learner-centric Training Platform which enables to facilitate a wide range of learning tasks (investigation, troubleshooting, development) via interactive module system. 
 
-Based on scenario-related approach with instant feedback, it will help you to walk a long way from the beginner to advanced level step by step.
+Based on a hands-on experience, the Platform delivers scenario-related approach with instant feedback. So, the user can easily navigate his training path - learn, practice, instantly check the results and track the progress in the personal report in the course of a chosen technology or a tool (currently available courses - __Docker__ and __Kubernetes__).
+
+The Platform can be used either in a face-to-face training, an instructor-led training, a blended learning, or just a self-paced training to address multi-purpose demands.
+
+Design of the course is aimed to provide a wide scope of scenarios to cover all the competency levels starting from the beginner and up to advance during a step-by-step learning process. **Playpit-Labs** is a kind of a virtual campus, where everyone can anytime and anywhere access the training materials and interact. 
 
 #### Check it out and try!
 
