@@ -54,7 +54,7 @@ Lab stand available by following urls:
 
 
 ## Available Trainings and Scopes
-- **kubernetes** (pods, deployments, services, ingress, volumes, configMaps and secretes, helm, etc)
+- **kubernetes** (pods, deployments, services, ingresses, volumes, configMaps and secretes, helm, etc)
 - **docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
 
 ## Screen Shots
