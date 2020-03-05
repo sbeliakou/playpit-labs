@@ -53,11 +53,27 @@ Lab stand available by following urls:
 - http://localhost:8081/
 
 
-### Available Trainings
+### Available Trainings and Scopes
 - **kubernetes**
+  - pods
+  - deployments
+  - services
+  - ingress
+  - volumes
+  - configMaps and secretes
+  - helm
+  - etc
 - **docker**
+  - images
+  - containers
+  - volumes
+  - networks
+  - docker-compose
+  - namespaces and cgroups
+  - daemon configuration
+  - etc
 
-### Screen shots
+## Screen Shots
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/module-start.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/loading.png)
