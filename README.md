@@ -1,8 +1,12 @@
 # Playpit Labs: Local Hands-on Playground
 
+Locally provisioned interactive Lab Stand which is aimed to work out vide kinds of tasks (investigation, troubleshooting and development) - all about uplifting your hands-on experience. It currently covers such technologies and tools like Docker and Kubernetes. 
+
+Based on scenario-related approach with instant feedback. It will help you to walk through a long path step by step from the beginner to advanced level.
+
 ### Main Features:
 - In-browser terminal window
-- Integrated browser window facility
+- Integrated web browsing facility
 - Easy navigation between tasks/scenarios
 - Instant feedback with scoring results
 - Tracking overall progress
@@ -11,8 +15,8 @@
 - Full of useful documentation
 
 ### Architecture Specifics:
-- Docker-based (systemd) containers
-- Pre-baked configuration (as per lab purpose)
+- Docker-based (systemd) containers (Linux inside!!!)
+- Pre-baked configuration (as per lab purposes)
 - Fast and easy rolling out
 
 ## System Requirements:
