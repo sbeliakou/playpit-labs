@@ -2,7 +2,7 @@
 
 Locally provisioned interactive Lab Stand which is aimed to work out vide kinds of tasks (investigation, troubleshooting and development) - all about uplifting your hands-on experience. It currently covers such technologies and tools like Docker and Kubernetes. 
 
-Based on scenario-related approach with instant feedback. It will help you to walk through a long path step by step from the beginner to advanced level.
+Based on scenario-related approach with instant feedback. It will help you to walk through a long road step by step from the beginner to advanced level.
 
 ### Main Features:
 - In-browser terminal window
