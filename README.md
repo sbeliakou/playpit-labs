@@ -4,6 +4,8 @@ Locally provisioned interactive Lab Stand which is aimed to work out vide kinds 
 
 Based on scenario-related approach with instant feedback. It will help you to walk through a long road step by step from the beginner to advanced level.
 
+#### Check it out and try!
+
 ### Main Features:
 - In-browser terminal window
 - Integrated web browsing facility
