@@ -10,8 +10,9 @@ labName="labs/${1}.yml"
 
 if [ -f ${labName} ]; then
   ## Removing previous stack
-  docker ps -q --filter label=lab | xargs -r docker rm -f
-  docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
+  docker ps -q --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
+  docker volume ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker volume rm -f
+  docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker network rm -f
 
   ## Pulling updates
   PWD=$PWD docker-compose -f ${labName} pull

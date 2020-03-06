@@ -6,6 +6,6 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
 fi
 
 ## Removing previous stack, if it is
-docker ps -q --filter label=lab | xargs -r docker rm -f
-docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
-docker network ls --filter label=lab -q | xargs -r docker network rm
+docker ps -q --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
+docker volume ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker volume rm -f
+docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker network rm
