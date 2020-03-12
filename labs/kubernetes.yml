@@ -9,7 +9,6 @@ services:
       - /lib/modules:/lib/modules:ro
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - containerd-master:/var/lib/containerd
-      - containerd-master-overlayfs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs
     tmpfs:
       - /run
       - /tmp
@@ -40,7 +39,6 @@ services:
       - /lib/modules:/lib/modules:ro
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - containerd-node01:/var/lib/containerd
-      - containerd-node01-overlayfs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs
     tmpfs:
       - /run
       - /tmp
