@@ -6,46 +6,31 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
   git pull -f 1>/dev/null 2>&1
 fi
 
-if [ -z "${1}" ]; then
-  cat << '  END' |  sed -r 's/^ {2}//'
-  Please specify "training name"
-
-  Usage:
-    ./start <training_name>
-
-  Available trainings:
-    kubernetes
-    docker
-  END
-  exit 1
-fi
-
-echo Checking system requirements
-
+echo "Checking Requirements:"
+DOCKER_VERSION=$(docker --version | sed -E 's/.*([0-9]{2}.[0-9]{2}.[0-9]+).*/\1/' | cut -d. -f1)
+DOCKER_COMPOSE_VERSION=$(docker-compose --version | sed -E 's/.*([0-9]{1,2}.[0-9]{2}.[0-9]+),.*/\1/' | cut -d. -f2)
+[ "${DOCKER_VERSION:-0}" -ge 19 ] && printf "%-20s .. ok\n" "docker" || (printf "%-20s .. %s\n" "docker" "FAILED (should be 19+)"; exit 1)
+[ "${DOCKER_COMPOSE_VERSION:-0}" -ge 25 ] && printf "%-20s .. ok\n" "docker-compose" || (printf "%-20s .. %s\n" "docker-compose" "FAILED (should be 1.25+)"; exit 1)
+echo
 
 stackFile=$(mktemp --suffix .playpit-labs.${1})
-curl -s -o ${stackFile} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml
-
-grep 'Access Denied' ${stackFile} >/dev/null && {
-  echo "Error: can't find requested training"
+curl -s -o ${stackFile} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml --fail || {
+  echo -e "Error: can't find requested training\n"
+  echo -e 'Usage:\n  ./start <training_name>\n\nAvailable trainings:\n  kubernetes\n  docker\n'
   exit 1
 }
 
-echo Cleaning up
+echo Cleaning up:
 docker ps -q --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
 docker volume ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker volume rm -f
 docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker network rm
-echo
 
-echo Pulling updates
+echo -e "\nPulling updates:"
 PWD=$PWD docker-compose -f ${stackFile} pull
-echo
 
-echo Starting New Stack
+echo -e "\nStarting New Stack:"
 PWD=$PWD docker-compose -f ${stackFile} up -d --renew-anon-volumes --remove-orphans
 rm -f $stackFile
-echo 
 
 ## Finish
-echo "Ready! Browse: http://lab.playpit.net:8081"
-echo
+echo -e "\nReady! Browse: http://lab.playpit.net:8081\n"
