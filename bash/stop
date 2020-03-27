@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
   git reset --hard HEAD 1>/dev/null 2>&1
   git pull -f 1>/dev/null 2>&1
 fi

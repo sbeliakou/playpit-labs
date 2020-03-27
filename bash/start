@@ -20,10 +20,13 @@ if [ -z "${1}" ]; then
   exit 1
 fi
 
-dockerFile=$(mktemp --suffix .playpit-labs.${1})
-curl -s -o ${dockerFile} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml
+echo Checking system requirements
 
-grep 'Access Denied' ${dockerFile} >/dev/null && {
+
+stackFile=$(mktemp --suffix .playpit-labs.${1})
+curl -s -o ${stackFile} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml
+
+grep 'Access Denied' ${stackFile} >/dev/null && {
   echo "Error: can't find requested training"
   exit 1
 }
@@ -35,11 +38,12 @@ docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | 
 echo
 
 echo Pulling updates
-PWD=$PWD docker-compose -f ${dockerFile} pull
+PWD=$PWD docker-compose -f ${stackFile} pull
 echo
 
 echo Starting New Stack
-PWD=$PWD docker-compose -f ${dockerFile} up -d --renew-anon-volumes --remove-orphans
+PWD=$PWD docker-compose -f ${stackFile} up -d --renew-anon-volumes --remove-orphans
+rm -f $stackFile
 echo 
 
 ## Finish
