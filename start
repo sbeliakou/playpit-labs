@@ -1,35 +1,47 @@
 #!/bin/bash
 
 cd $(dirname $0)
-if [ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]; then
+if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
   git reset --hard HEAD 1>/dev/null 2>&1
   git pull -f 1>/dev/null 2>&1
 fi
 
-labName="labs/${1}.yml"
+if [ -z "${1}" ]; then
+  cat << '  END' |  sed -r 's/^ {2}//'
+  Please specify "training name"
 
-if [ -f ${labName} ]; then
-  ## Removing previous stack
-  docker ps -q --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
-  docker volume ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker volume rm -f
-  docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker network rm
+  Usage:
+    ./start <training_name>
 
-  ## Pulling updates
-  PWD=$PWD docker-compose -f ${labName} pull
-
-  ## Starting New Stack
-  PWD=$PWD docker-compose -f ${labName} up -d --renew-anon-volumes --remove-orphans
-
-  ## It's done
-  echo "Ready! Browse: http://lab.playpit.net:8081"
-  echo
-else
-  echo "Please specify Training name"
-  echo 
-  echo "Usage:"
-  echo "  ./start <training_name>"
-  echo 
-  echo "Available trainings:"
-  ls labs/*.yml | sed 's/labs./  /;s/.yml//'
-  echo
+  Available trainings:
+    kubernetes
+    docker
+  END
+  exit 1
 fi
+
+dockerFile=$(mktemp --suffix .playpit-labs.${1})
+curl -s -o ${dockerFile} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml
+
+grep 'Access Denied' ${dockerFile} >/dev/null && {
+  echo "Error: can't find requested training"
+  exit 1
+}
+
+echo Cleaning up
+docker ps -q --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
+docker volume ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker volume rm -f
+docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker network rm
+echo
+
+echo Pulling updates
+PWD=$PWD docker-compose -f ${dockerFile} pull
+echo
+
+echo Starting New Stack
+PWD=$PWD docker-compose -f ${dockerFile} up -d --renew-anon-volumes --remove-orphans
+echo 
+
+## Finish
+echo "Ready! Browse: http://lab.playpit.net:8081"
+echo
