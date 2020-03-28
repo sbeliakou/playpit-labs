@@ -38,10 +38,10 @@ Here's a list of commands which bring this stand up and terminate local infrastr
 
 **Linux/MacOS Bash**:
 ```sh
-bash/start             ## Getting Help
-bash/start docker      ## starting Docker Lab
-bash/start kubernetes  ## starting Kubernetes Lab
-bash/stop              ## Tearing it all down
+bash/start                 ## Getting Help
+bash/start docker          ## starting Docker Lab
+bash/start kubernetes      ## starting Kubernetes Lab
+bash/stop                  ## Tearing it all down
 ```
 
 **Windows PowerShell**:
