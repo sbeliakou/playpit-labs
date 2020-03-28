@@ -7,10 +7,10 @@ if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
 fi
 
 echo "Checking Requirements:"
-DOCKER_VERSION=$(docker --version | sed -E 's/.*([0-9]{2}.[0-9]{2}.[0-9]+).*/\1/' | cut -d. -f1)
 DOCKER_COMPOSE_VERSION=$(docker-compose --version | sed -E 's/.*([0-9]{1,2}.[0-9]{2}.[0-9]+),.*/\1/' | cut -d. -f2)
-[ "${DOCKER_VERSION:-0}" -ge 19 ] && printf "%-20s .. ok\n" "docker" || (printf "%-20s .. %s\n" "docker" "FAILED (should be 19+)"; exit 1)
-[ "${DOCKER_COMPOSE_VERSION:-0}" -ge 25 ] && printf "%-20s .. ok\n" "docker-compose" || (printf "%-20s .. %s\n" "docker-compose" "FAILED (should be 1.25+)"; exit 1)
+[ "$(docker info --format '{{ .ServerVersion }}' | cut -d. -f1)" -ge 19 ] && printf "%-20s .. ok\n" "docker" || printf "%-20s .. %s\n" "docker" "FAILED (should be 19+)" && exit 1
+[ "$(docker info --format '{{ .ServerErrors }}')" == "[]" ] && printf "%-20s .. ok\n" "docker is running" || printf "%-20s .. %s\n" "docker is running" "FAILED (is docker running?)" && exit 1
+[ "${DOCKER_COMPOSE_VERSION:-0}" -ge 25 ] && printf "%-20s .. ok\n" "docker-compose" || printf "%-20s .. %s\n" "docker-compose" "FAILED (should be 1.25+)" && exit 1
 echo
 
 stackFile=$(mktemp --suffix .playpit-labs.${1})
