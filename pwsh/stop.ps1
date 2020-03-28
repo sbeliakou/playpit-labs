@@ -12,6 +12,14 @@ else {
   exit 1
 }
 
+if (Get-Process "docker.exe" -ErrorAction SilentlyContinue) {
+  Write-Output "docker is running   ..  ok"
+}
+else {
+  Write-Output "docker is running   ..  FAILED (is docker running?)"
+  exit 1
+}
+
 if (Get-Command "docker-compose.exe" 2> $null) { 
   Write-Output "docker-compose ..  ok"
 }
