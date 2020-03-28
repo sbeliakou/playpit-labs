@@ -36,27 +36,23 @@ Please ensure that your local station meets the following requirements before us
 
 Here's a list of commands which bring this stand up and terminate local infrastructure.
 
+**Linux/MacOS Bash**:
 ```sh
-./start <training_name>
-./stop
+bash/start                 ## Getting Help
+bash/start docker          ## starting Docker Lab
+bash/start kubernetes      ## starting Kubernetes Lab
+bash/stop                  ## Tearing it all down
 ```
 
-More details:
+**Windows PowerShell**:
 ```sh
-## Getting Help
-./start 
-
-## start Docker Lab
-./start docker
-
-## start Kubernetes Lab
-./start kubernetes
-
-## Tearing it All Down
-./stop
+pwsh\start.ps1             ## Getting Help
+pwsh\start.ps1 docker      ## starting Docker Lab
+pwsh\start.ps1 kubernetes  ## starting Kubernetes Lab
+pwsh\stop.ps1              ## Tearing it all down
 ```
 
-## Lab URL
+## Lab URLs
 
 Lab stand is available by the following addresses:
 - http://lab.playpit.net:8081/
