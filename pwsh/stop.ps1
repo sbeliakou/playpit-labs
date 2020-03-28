@@ -5,10 +5,10 @@ if ( (git rev-parse --abbrev-ref HEAD) -eq "master") {
 
 Write-Output "Checking Requirements:"
 if (Get-Command "docker.exe" 2> $null) { 
-  Write-Output "docker         ..  ok"
+  Write-Output "docker              ..  ok"
 }
 else {
-  Write-Output "docker         ..  FAILED (can't find in PATH)"
+  Write-Output "docker              ..  FAILED (can't find in PATH)"
   exit 1
 }
 
@@ -21,10 +21,10 @@ else {
 }
 
 if (Get-Command "docker-compose.exe" 2> $null) { 
-  Write-Output "docker-compose ..  ok"
+  Write-Output "docker-compose      ..  ok"
 }
 else {
-  Write-Output "docker-compose ..  FAILED (can't find in PATH)"
+  Write-Output "docker-compose      ..  FAILED (can't find in PATH)"
   exit 1
 }
 

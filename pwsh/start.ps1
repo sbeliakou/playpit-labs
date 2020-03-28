@@ -30,8 +30,8 @@ else {
 
 $training = ($args[0])
 $stackFile = New-TemporaryFile | Rename-Item -NewName { $_ -replace '.tmp$', ".playpit-labs.$($training)" } –PassThru
-
 $url = "https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-$($training).yml"
+
 Try { 
   (New-Object System.Net.WebClient).DownloadFile($url, $stackFile)
 } Catch {
