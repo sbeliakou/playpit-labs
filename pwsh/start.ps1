@@ -7,24 +7,31 @@ if ( (git rev-parse --abbrev-ref HEAD) -eq "master") {
 
 Write-Output "Checking Requirements:"
 if (Get-Command "docker.exe" 2> $null) { 
-  Write-Output "docker         ..  ok"
+  Write-Output "docker              ..  ok"
 } else {
-  Write-Output "docker         ..  FAILED (can't find in PATH)"
+  Write-Output "docker              ..  FAILED (can't find in PATH)"
+  exit 1
+}
+
+if (Get-Process "docker.exe" -ErrorAction SilentlyContinue) {
+  Write-Output "docker is running   ..  ok"
+} else {
+  Write-Output "docker is running   ..  FAILED (is docker running?)"
   exit 1
 }
 
 if (Get-Command "docker-compose.exe" 2> $null) { 
-  Write-Output "docker-compose ..  ok"
+  Write-Output "docker-compose      ..  ok"
 }
 else {
-  Write-Output "docker-compose ..  FAILED (can't find in PATH)"
+  Write-Output "docker-compose      ..  FAILED (can't find in PATH)"
   exit 1
 }
 
 $training = ($args[0])
 $stackFile = New-TemporaryFile | Rename-Item -NewName { $_ -replace '.tmp$', ".playpit-labs.$($training)" } –PassThru
+$url = "https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-$($training).yml"
 
-$url = "https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-$($args[0]).yml"
 Try { 
   (New-Object System.Net.WebClient).DownloadFile($url, $stackFile)
 } Catch {
