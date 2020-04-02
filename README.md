@@ -45,7 +45,16 @@ bash/stop                  ## Tearing it all down
 ```
 
 **Windows PowerShell**:
-```sh
+
+Open powershell console as Administrator and execute:
+
+```powershell
+Set-ExecutionPolicy Unrestricted  ## Getting an ability to execute pwsh scripts
+```
+
+The next step is:
+
+```powershell
 pwsh\start.ps1             ## Getting Help
 pwsh\start.ps1 docker      ## starting Docker Lab
 pwsh\start.ps1 kubernetes  ## starting Kubernetes Lab
