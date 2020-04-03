@@ -73,12 +73,12 @@ Lab stand is available by the following addresses:
 - **Docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
 
 ## Screen Shots
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.png)
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/module-start.png)
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/loading.png)
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/success-window.png)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.jpg)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-01.jpg)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-02.jpg)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-04.jpg)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-07.jpg)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/failure-window.png)
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/sample-quiz-1.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/allgood.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/progress.png)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/closed.png)
