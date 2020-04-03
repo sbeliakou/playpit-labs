@@ -79,6 +79,6 @@ Lab stand is available by the following addresses:
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-04.jpg)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-07.jpg)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-08.jpg)
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/allgood.png)
-![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/progress.png)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-09.jpg)
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-10.jpg)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/closed.png)
