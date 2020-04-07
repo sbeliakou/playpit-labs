@@ -28,8 +28,8 @@ DOCKER_COMPOSE_VERSION=$(docker-compose --version | sed -E 's/.*([0-9]{1,2}.[0-9
 
 echo
 
-stackFile=$(mktemp --suffix .playpit-labs.${1})
-curl -s -o ${stackFile} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml --fail || {
+stackFile=$(mktemp --version 2>/dev/null | grep GNU >/dev/null && mktemp --suffix .playpit-labs.${1} || mktemp)
+curl -s -o ${stackFile:-/tmp/.playpit-labs.${1}} https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${1}.yml --fail || {
   echo -e "Error: can't find requested training\n"
   echo -e 'Usage:\n  ./start <training_name>\n\nAvailable trainings:\n  kubernetes\n  docker\n'
   exit 1
