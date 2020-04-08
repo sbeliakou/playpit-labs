@@ -41,7 +41,7 @@ Try {
 }
 
 Write-Output "Cleaning Up"
-docker ps -q --filter label=lab | ForEach-Object { docker rm -f $_ }
+docker ps -qa --filter label=lab | ForEach-Object { docker rm -f $_ }
 docker volume ls --filter label=lab -q | ForEach-Object { docker volume rm -f $_ }
 docker network ls --filter label=lab -q | ForEach-Object {docker network rm $_ }
 

@@ -29,6 +29,6 @@ DOCKER_COMPOSE_VERSION=$(docker-compose --version | sed -E 's/.*([0-9]{1,2}.[0-9
 echo
 
 ## Removing previous stack, if it is
-docker ps -q --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
+docker ps -qa --filter label=lab | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker rm -f
 docker volume ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker volume rm -f
 docker network ls --filter label=lab -q | xargs $(xargs --version 2>/dev/null | grep GNU >/dev/null && echo "-r") docker network rm
