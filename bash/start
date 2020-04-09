@@ -9,15 +9,15 @@ function failure() {
   exit 1
 }
 
-# if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
-#   git reset --hard HEAD 1>/dev/null 2>&1
-#   git pull -f 1>/dev/null 2>&1
-# fi
+if [ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]; then
+  git reset --hard HEAD 1>/dev/null 2>&1
+  git pull -f 1>/dev/null 2>&1
+fi
 
 echo "Checking Requirements:"
 
 echo -n "docker is running       .. " 
-[ "$(docker info --format '{{ .ServerErrors }}')" == "[]" ] && success || fialure "is docker running?"
+[ "$(docker info --format '{{ .ServerErrors }}')" == "[]" ] && success || failure "is docker running?"
 
 echo -n "docker v19+             .. "
 [ "$(docker info --format '{{ .ServerVersion }}' | cut -d. -f1)" -ge 19 ] && success || failure "should be 19+"
