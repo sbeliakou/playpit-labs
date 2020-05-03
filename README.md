@@ -95,10 +95,6 @@ Lab stand is available by the following addresses:
   - 10 RBAC - User Access
   - Playground
 
-## Available Trainings and Scopes
-- **Kubernetes** (pods, deployments, services, ingresses, volumes, configMaps and secretes, helm, etc)
-- **Docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
-
 ## Screen Shots
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/login-window.jpg)
 ![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/screen-01.jpg)
