@@ -68,6 +68,33 @@ Lab stand is available by the following addresses:
 - http://localhost:8081/
 
 
+## Labs
+
+### Docker (v19.03.6):
+  - 00 Basics
+  - 01 Images
+  - 02 Containers
+  - 03 Volumes
+  - 04 Networks
+  - 05 Compose
+  - 06 Limits
+  - 07 Extra
+  - Playground
+
+### Kubernetes (v1.18.2):
+  - 00 Basics
+  - 01 Pods
+  - 02 Deployments
+  - 03 Services
+  - 04 Ingress
+  - 05 Volumes
+  - 06 ConfigMaps and Secrets
+  - 07 Helm
+  - 08 Cluster Creation with kubeadm
+  - 09 Bootstrapping Nodes with TLS
+  - 10 RBAC - User Access
+  - Playground
+
 ## Available Trainings and Scopes
 - **Kubernetes** (pods, deployments, services, ingresses, volumes, configMaps and secretes, helm, etc)
 - **Docker** (images, containers, volumes, networks, docker-compose, namespaces and cgroups, daemon configuration, etc)
