@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VNetTemplateSettings": {
+      "value": {
+        "name": "VNET",
+        "addressSpace": {
+          "addressPrefixes": {
+            "name": "firstPrefix",
+            "addressPrefix": "10.0.0.0/16"
+          }
+        },
+        "subnets": [
+          {
+            "name": "front-end-subnet",
+            "properties": {
+              "addressPrefix": "10.0.0.0/24"
+            }
+          },
+          {
+            "name": "back-end-subnet",
+            "properties": {
+              "addressPrefix": "10.0.1.0/24"
+            }
+          }
+        ]
+      }
+    },
+    "VmTemplateSettings": {
+      "value": {
+        "VmSettings": {
+          "name": "VM",
+          "hardwareProfile": {
+            "vmSize": "Standard_D2s_v3"
+          },
+          "storageProfile": {
+            "imageReference": {
+              "publisher": "Canonical",
+              "offer": "UbuntuServer",
+              "sku": "18.04-LTS"
+            },
+            "osDisk": {
+              "name": "ubuntuVM-OSDisk",
+              "caching": "ReadWrite",
+              "createOption": "FromImage"
+            }
+          }
+        },
+        "NsgSettings": {
+          "name": "NSG",
+          "securityRules": [
+            {
+              "name": "Allow8081",
+              "properties": {
+                "description": "Allow 8081",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "8081",
+                "access": "Allow",
+                "direction": "Inbound",
+                "protocol": "*",
+                "priority": 100
+              }
+            },
+            {
+              "name": "Allow22",
+              "properties": {
+                "description": "Allow SSH",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "22",
+                "access": "Allow",
+                "direction": "Inbound",
+                "protocol": "*",
+                "priority": 120
+              }
+            }
+          ]
+        },
+        "PipSettings": {
+          "name": "PIP",
+          "publicIPAllocationMethod": "Dynamic"
+        },
+        "NicSettings": {
+          "name": "NIC",
+          "ipConfigurations": {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic"
+            }
+          }
+        }
+      }
+    }
+  }
+}

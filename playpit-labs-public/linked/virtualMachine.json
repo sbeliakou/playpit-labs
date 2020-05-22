@@ -1,0 +1,180 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "uniqueName": {
+      "type": "string"
+    },
+    "VmTemplateSettings": {
+      "type": "object"
+    },
+    "vmAdminUsername": {
+      "type": "string"
+    },
+    "vmAdminPassword": {
+      "type": "securestring"
+    },
+    "VirtualNetworkId": {
+      "type": "string"
+    },
+    "VNetTemplateSettings": {
+      "type": "object"
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+      }
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Auto-generated token to access _artifactsLocation"
+      }
+    }
+  },
+  "variables": {
+    "virtualMachineName": "[concat(parameters('uniqueName'), parameters('VmTemplateSettings').VmSettings.name)]",
+    "publicIpName": "[concat(variables('VirtualMachineName'), '-', parameters('VmTemplateSettings').PipSettings.name)]",
+    "networkInterfaceName": "[concat(variables('VirtualMachineName'), '-' , parameters('VmTemplateSettings').NicSettings.name)]",
+    "networkSecurityGroupName": "[concat(parameters('uniqueName'), parameters('VmTemplateSettings').NsgSettings.name)]",
+    "networkSecurityGroupId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
+    "networkInterfaceId": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]",
+    "publicIpId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpName'))]",
+    "VMSubnetRef": "[concat(parameters('VirtualNetworkId'), '/subnets/', parameters('VNetTemplateSettings').subnets[0].name)]"
+  },
+  "resources": [
+    { // NSG
+      "name": "[variables('networkSecurityGroupName')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-09-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "NetworkSecurityGroup"
+      },
+      "properties": {
+        "securityRules": "[parameters('VmTemplateSettings').NsgSettings.securityRules]"
+      }
+    },
+    { // Public IP
+      "name": "[variables('publicIpName')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2019-09-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+      ],
+      "tags": {
+        "displayName": "Public IP"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('VmTemplateSettings').PipSettings.publicIPAllocationMethod]",
+        "dnsSettings": {
+          "domainNameLabel": "[toLower(variables('virtualMachineName'))]"
+        }
+      }
+    },
+    { // Network Interface
+      "name": "[variables('networkInterfaceName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2019-09-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('publicIpName')]",
+        "[variables('networkSecurityGroupName')]"
+      ],
+      "tags": {
+        "displayName": "Network Interface"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "[parameters('VmTemplateSettings').NicSettings.ipConfigurations.name]",
+            "properties": {
+              "privateIPAllocationMethod": "[parameters('VmTemplateSettings').NicSettings.ipConfigurations.properties.privateIPAllocationMethod]",
+              "subnet": {
+                "id": "[variables('VMSubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[variables('publicIpId')]"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "[variables('networkSecurityGroupId')]"
+        }
+      }
+    },
+    { // Virtual Machine
+      "name": "[variables('VirtualMachineName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2019-07-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('networkInterfaceName')]"
+      ],
+      "tags": {
+        "displayName": "Virtual Machine"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('VmTemplateSettings').VmSettings.hardwareProfile.vmSize]"
+        },
+        "osProfile": {
+          "computerName": "[variables('VirtualMachineName')]",
+          "adminUsername": "[parameters('vmAdminUsername')]",
+          "adminPassword": "[parameters('vmAdminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('VmTemplateSettings').VmSettings.storageProfile.imageReference.publisher]",
+            "offer": "[parameters('VmTemplateSettings').VmSettings.storageProfile.imageReference.offer]",
+            "sku": "[parameters('VmTemplateSettings').VmSettings.storageProfile.imageReference.sku]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[parameters('VmTemplateSettings').VmSettings.storageProfile.osDisk.name]",
+            "caching": "[parameters('VmTemplateSettings').VmSettings.storageProfile.osDisk.caching]",
+            "createOption": "[parameters('VmTemplateSettings').VmSettings.storageProfile.osDisk.createOption]"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[variables('networkInterfaceId')]"
+            }
+          ]
+        }
+      }
+    },
+    { // Custom Script
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('VirtualMachineName'),'/customscript')]",
+      "apiVersion": "2019-12-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('VirtualMachineName')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "[concat(parameters('_artifactsLocation'), '/CustomScript/', 'startdocker.sh', parameters('_artifactsLocationSasToken'))]"
+          ],
+          "commandToExecute": "sh startdocker.sh"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "fqdn": {
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpName'))).dnsSettings.fqdn]",
+      "type": "string"
+    }
+  }
+}
