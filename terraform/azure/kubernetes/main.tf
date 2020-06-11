@@ -3,7 +3,7 @@ module "playpit" {
   training = "kubernetes"
   vm_size = "Standard_F4s_v2"
    
-  # full_name = "Siarhei Beliakou"
+  # name = "Siarhei Beliakou"
   # username = "sbeliakou"
 }
 

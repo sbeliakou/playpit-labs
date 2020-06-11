@@ -60,7 +60,7 @@ data "template_file" "cloud_init" {
     username = var.username
     password = random_password.password.result
     training = var.training
-    fullname = var.full_name
+    NAME = var.name
   }
 }
 

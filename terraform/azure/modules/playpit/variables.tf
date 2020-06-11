@@ -14,7 +14,7 @@ variable "vm_size" {
 }
 
 
-variable "full_name" {
+variable "name" {
   description = "User Name"
   # default = "Siarhei Beliakou"
 }

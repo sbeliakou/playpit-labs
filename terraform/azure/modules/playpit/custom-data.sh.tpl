@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Azure VM Fix
+systemctl stop systemd-resolved
+systemctl disable systemd-resolved
+echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
 apt-get update
 apt-get install -y \
     apt-transport-https \
@@ -82,14 +87,23 @@ docker run -d --restart=always \
   nginx:alpine
 
 mkdir -p /opt/playpit/
-curl -s -o /opt/playpit/docker-compose.yaml https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${training}-cloud.yml
+cd /opt/playpit/
 
+curl -s -o /opt/playpit/docker-compose.yaml https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${training}-cloud.yml
+grep NAME /etc/environment || echo NAME="${NAME}" >> /etc/environment
+
+cat << END > start.sh
 # cleanup
 docker ps -qa --filter label=lab | xargs -r docker rm -f
 docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
 docker network ls --filter label=lab -q | xargs -r docker network rm
 
-cd /opt/playpit/
+# update
+docker-compose pull
 
-USERNAME="${fullname}" docker-compose pull
-USERNAME="${fullname}" docker-compose up -d --renew-anon-volumes --remove-orphans
+# start
+docker-compose up -d --renew-anon-volumes --remove-orphans
+END
+
+chmod a+x start.sh
+./start.sh
