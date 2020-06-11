@@ -51,7 +51,7 @@ resource "random_password" "password" {
   min_lower = 3
   min_special = 3
   min_numeric = 3
-  override_special = "_%@$*"
+  override_special = "_%@"
 }
 
 data "template_file" "cloud_init" {

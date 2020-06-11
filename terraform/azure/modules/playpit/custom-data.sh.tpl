@@ -89,5 +89,7 @@ docker ps -qa --filter label=lab | xargs -r docker rm -f
 docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
 docker network ls --filter label=lab -q | xargs -r docker network rm
 
+cd /opt/playpit/
+
 USERNAME="${fullname}" docker-compose pull
 USERNAME="${fullname}" docker-compose up -d --renew-anon-volumes --remove-orphans
