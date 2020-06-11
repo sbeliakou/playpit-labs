@@ -3,8 +3,8 @@ module "playpit" {
   training = "kubernetes"
   vm_size = "Standard_F4s_v2"
    
-  full_name = "Siarhei Beliakou"
-  username = "sbeliakou"
+  # full_name = "Siarhei Beliakou"
+  # username = "sbeliakou"
 }
 
 output "server_name" {
