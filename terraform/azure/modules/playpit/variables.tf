@@ -5,7 +5,7 @@ variable "prefix" {
 
 variable "location" {
   description = "The Azure Region in which all resources in this example should be created."
-  default = "uksouth"
+  default = "northeurope"
 }
 
 variable "vm_size" {
@@ -13,18 +13,14 @@ variable "vm_size" {
   default = "Standard_B2s"  
 }
 
-
-variable "name" {
+variable "fullname" {
   description = "User Name"
-  # default = "Siarhei Beliakou"
 }
 
-variable "username" {
+variable "shortname" {
   description = "System's username"
-  # default = "sbeliakou"
 }
 
 variable "training" {
   description = "Training Name: docker or kubernetes"
-  # default = "docker"
 }

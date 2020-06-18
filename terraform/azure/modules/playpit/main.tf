@@ -26,7 +26,7 @@ resource "azurerm_public_ip" "public_ip" {
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   allocation_method   = "Dynamic"
-  domain_name_label   = "${var.username}-${var.training}-${var.prefix}"
+  domain_name_label   = "${var.shortname}-${var.training}-${var.prefix}"
 }
 
 resource "azurerm_network_interface" "main" {
@@ -57,10 +57,11 @@ resource "random_password" "password" {
 data "template_file" "cloud_init" {
   template = "${file("${path.module}/custom-data.sh.tpl")}"
   vars = {
-    username = var.username
+    username = var.shortname
     password = random_password.password.result
     training = var.training
-    NAME = var.name
+    NAME = var.fullname
+    SERVER_NAME = "${var.shortname}-${var.training}-${var.prefix}.${var.location}.cloudapp.azure.com"
   }
 }
 
@@ -69,7 +70,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
   size                            = var.vm_size
-  admin_username                  = var.username
+  admin_username                  = var.shortname
   admin_password                  = random_password.password.result
   custom_data                     = base64encode(data.template_file.cloud_init.rendered)
   disable_password_authentication = false
@@ -79,7 +80,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   ]
 
   admin_ssh_key {
-    username = var.username
+    username = var.shortname
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -98,13 +99,13 @@ resource "azurerm_linux_virtual_machine" "main" {
 }
 
 output "server_name" {
-  value = "${var.username}-${var.training}-${var.prefix}.${var.location}.cloudapp.azure.com"
+  value = "${var.shortname}-${var.training}-${var.prefix}.${var.location}.cloudapp.azure.com"
 }
 
 output "service_name" {
-  value = "http://${var.username}-${var.training}-${var.prefix}.${var.location}.cloudapp.azure.com:8081/"
+  value = "http://${var.shortname}-${var.training}-${var.prefix}.${var.location}.cloudapp.azure.com:8081/"
 }
 
 output "credentials" {
-  value = "${var.username} / ${random_password.password.result}"
+  value = "${var.shortname} / ${random_password.password.result}"
 }

@@ -15,11 +15,7 @@ apt-get install -y \
     software-properties-common
     
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-
-add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 apt-get update
 apt-get install -y docker-ce
@@ -28,49 +24,45 @@ systemctl enable --now docker
 curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod a+x /usr/local/bin/docker-compose
 
+mkdir -p /opt/playpit/frontend/data/nginx /opt/playpit/backend
 
-mkdir -p /opt/oauth
-
-cat << END > /opt/oauth/nginx.conf
+cat << END > /opt/playpit/frontend/data/nginx/nginx.conf
 events {
     worker_connections  1024;
 }
 
 http {
-
-  upstream playpit-stand {
-    server 127.0.0.1:8081;
-  }
-
   map \$http_upgrade \$connection_upgrade {
       default upgrade;
       '' close;
   }
 
   server {
+    server_name ${SERVER_NAME};
     listen $(ifconfig eth0 | grep 'inet ' | awk '{print $2}'):8081;
-
-    # disable any limits to avoid HTTP 413 for large image uploads
-    client_max_body_size 0;
-
-    # required to avoid HTTP 411: see Issue #1486 (https://github.com/moby/moby/issues/1486)
     chunked_transfer_encoding on;
 
     location / {
       auth_basic "Registry realm";
       auth_basic_user_file /etc/nginx/conf.d/nginx.htpasswd;
 
-      proxy_pass                          http://playpit-stand;
-
       proxy_http_version 1.1;
-      proxy_set_header Upgrade \$http_upgrade;
-      proxy_set_header Connection \$connection_upgrade;
+      proxy_set_header   Upgrade \$http_upgrade;
+      proxy_set_header   Connection \$connection_upgrade;
 
-      proxy_set_header  Host              \$http_host;   # required for docker client's sake
-      proxy_set_header  X-Real-IP         \$remote_addr; # pass on real client's IP
-      proxy_set_header  X-Forwarded-For   \$proxy_add_x_forwarded_for;
-      proxy_set_header  X-Forwarded-Proto \$scheme;
-      proxy_read_timeout                  900;
+      proxy_set_header   Host              \$http_host;
+      proxy_set_header   X-Real-IP         \$remote_addr;
+      proxy_set_header   X-Forwarded-For   \$proxy_add_x_forwarded_for;
+      proxy_set_header   X-Forwarded-Proto \$scheme;
+      proxy_read_timeout 9000;
+
+      proxy_pass         http://127.0.0.1:8081;
+    }
+    
+    location ^~ /restart {
+      auth_basic "Registry realm";
+      auth_basic_user_file /etc/nginx/conf.d/nginx.htpasswd;
+      proxy_pass         http://127.0.0.1:1080/;
     }
   }
 }
@@ -78,25 +70,49 @@ END
 
 docker run --rm \
   --entrypoint htpasswd \
-  registry:2 -Bbn ${username} ${password} > /opt/oauth/nginx.htpasswd
+  registry:2 -Bbn ${username} ${password} > /opt/playpit/frontend/data/nginx/nginx.htpasswd
 
-docker run -d --restart=always \
-  -v /opt/oauth:/etc/nginx/conf.d \
-  -v /opt/oauth/nginx.conf:/etc/nginx/nginx.conf:ro \
-  --network=host \
-  nginx:alpine
+cat << END > /opt/playpit/frontend/docker-compose.yaml
+version: "2.3"
 
-mkdir -p /opt/playpit/
-cd /opt/playpit/
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./data/nginx/nginx.htpasswd:/etc/nginx/conf.d/nginx.htpasswd
+      - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./data/nginx/ssl:/etc/ssl:ro
+    restart: always
+    network_mode: host
 
-curl -s -o /opt/playpit/docker-compose.yaml https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${training}-cloud.yml
+  restart:
+    image: sbeliakou/playpit-restart
+    ports:
+      - 127.0.0.1:1080:80
+    volumes:
+      - /opt/playpit:/opt/playpit
+      - /var/run/docker.sock:/var/run/docker.sock 
+    environment:
+      NAME: ${NAME}
+    restart: always
+END
+
+cd /opt/playpit/frontend/
+docker-compose up -d
+
+curl -s -o /opt/playpit/backend/docker-compose.yaml https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/docker-compose/sbeliakou-${training}-cloud.yml
 grep NAME /etc/environment || echo NAME="${NAME}" >> /etc/environment
 
-cat << END > start.sh
+cat << END > /opt/playpit/start.sh
+#!/bin/bash
+
+cd /opt/playpit/backend/
+
 # cleanup
 docker ps -qa --filter label=lab | xargs -r docker rm -f
 docker volume ls --filter label=lab -q | xargs -r docker volume rm -f
 docker network ls --filter label=lab -q | xargs -r docker network rm
+docker-compose down --volumes
 
 # update
 docker-compose pull
@@ -105,5 +121,5 @@ docker-compose pull
 docker-compose up -d --renew-anon-volumes --remove-orphans
 END
 
-chmod a+x start.sh
-./start.sh
+chmod a+x /opt/playpit/start.sh
+NAME="${NAME}" /opt/playpit/start.sh

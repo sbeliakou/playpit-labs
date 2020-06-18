@@ -1,10 +1,10 @@
 module "playpit" {
   source = "../modules/playpit"
-  training = "kubernetes"
+  training = "docker"
   vm_size = "Standard_F4s_v2"
    
-  fullname = "Siarhei Beliakou"
-  shortname = "sbeliakou"
+  name = "Siarhei Beliakou"
+  username = "sbeliakou"
 }
 
 output "server_name" {
