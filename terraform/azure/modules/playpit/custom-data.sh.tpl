@@ -68,9 +68,7 @@ http {
 }
 END
 
-docker run --rm \
-  --entrypoint htpasswd \
-  registry:2 -Bbn ${username} ${password} > /opt/playpit/frontend/data/nginx/nginx.htpasswd
+docker run --rm sbeliakou/htpasswd ${username} '${password}' > /opt/playpit/frontend/data/nginx/nginx.htpasswd
 
 cat << END > /opt/playpit/frontend/docker-compose.yaml
 version: "2.3"
