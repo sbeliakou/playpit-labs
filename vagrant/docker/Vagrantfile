@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "sbeliakou/playpit-labs-docker"
+  config.vm.hostname = "docker-host"
+  # config.vm.network :private_network, ip: "192.168.56.105"
+
+  [80, 8080, 8081].flatten.each do |port|
+    config.vm.network "forwarded_port", guest: port, host: port, host_ip: "127.0.0.1"
+  end
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "playpit-labs"
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "30"]
+    vb.memory = "1536"
+  end
+
+  config.vm.post_up_message = <<-MSG
+    VM is up and running.
+    Please browse LAB UI: http://lab.playpit.net:8081
+
+  MSG
+end
