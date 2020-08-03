@@ -1,26 +1,32 @@
 ## Run Playpit-Labs Playground in Vagrant/VirtualBox
 
-### Add Box
+### Adding Box Image
 
 ```
 $ vagrant box add sbeliakou/playpit-labs-docker
 ```
 
-### Update Box Image
+### Updating Box Image
 ```
 $ vagrant box update
 ```
 
-### Start Up
+### Starting it Up
 ```
 $ vagrant up
 ```
 
-### Destroy
+#### Lab URLs
+Lab stand is available by the following addresses:
+
+- http://lab.playpit.net:8081/
+- http://localhost:8081/
+
+### Destroying Playground
 ```
 $ vagrant destroy -f
 ```
 
-### Restart Environament?
+### Restart Environment?
 
 Better to destroy it and start/recreate again.
