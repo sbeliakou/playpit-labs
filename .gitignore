@@ -1,0 +1,4 @@
+.vagrant
+.terraform
+*.tfstate
+*.tfstate.backup
