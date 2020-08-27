@@ -12,7 +12,7 @@ else {
   exit 1
 }
 
-if (Get-Process "docker.exe" -ErrorAction SilentlyContinue) {
+if (Get-Process "Docker Desktop" -ErrorAction SilentlyContinue) {
   Write-Output "docker is running   ..  ok"
 }
 else {
