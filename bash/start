@@ -44,7 +44,7 @@ echo -e "\nPulling updates:"
 PWD=$PWD docker-compose -f ${stackFile} pull
 
 echo -e "\nStarting New Stack:"
-PWD=$PWD docker-compose -f ${stackFile} up -d --renew-anon-volumes --remove-orphans
+PWD=$PWD PAYPIT_LL="${PLAYPIT_LL:-}" PLAYPIT_NAME="${PLAYPIT_NAME:-}" docker-compose -f ${stackFile} up -d --renew-anon-volumes --remove-orphans
 rm -f $stackFile
 
 ## Finish
