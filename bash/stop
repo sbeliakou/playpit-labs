@@ -17,7 +17,7 @@ fi
 echo "Checking Requirements:"
 
 echo -n "docker is running    .. " 
-[ "$(docker info --format '{{ .ServerErrors }}')" == "[]" ] && success || fialure "is docker running?"
+[ "$(docker info --format '{{ .ServerErrors }}')" == "[]" ] && success || failure "is docker running?"
 
 echo -n "docker 19+           .. "
 [ "$(docker info --format '{{ .ServerVersion }}' | cut -d. -f1)" -ge 19 ] && success || failure "should be 19+"
