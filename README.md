@@ -40,7 +40,7 @@ Here's a list of commands which bring this stand up and terminate local infrastr
 ```sh
 bash/start                 ## Getting Help
 bash/start docker          ## starting Docker Lab
-bash/start kubernetes      ## starting Kubernetes Lab
+bash/start k8s             ## starting Kubernetes Lab
 bash/stop                  ## Tearing it all down
 ```
 
@@ -52,12 +52,16 @@ Open powershell console as Administrator and execute:
 Set-ExecutionPolicy Unrestricted  ## Getting an ability to execute pwsh scripts
 ```
 
+! Important:
+ 
+In Docker Desktop settings, uncheck `General` -> `Use the WSL2 based engine`
+
 The next step is:
 
 ```powershell
 pwsh\start.ps1             ## Getting Help
 pwsh\start.ps1 docker      ## starting Docker Lab
-pwsh\start.ps1 kubernetes  ## starting Kubernetes Lab
+pwsh\start.ps1 k8s         ## starting Kubernetes Lab
 pwsh\stop.ps1              ## Tearing it all down
 ```
 
