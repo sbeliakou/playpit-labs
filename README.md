@@ -54,7 +54,9 @@ Set-ExecutionPolicy Unrestricted  ## Getting an ability to execute pwsh scripts
 
 ! Important:
  
-In Docker Desktop settings, uncheck `General` -> `Use the WSL2 based engine`
+In Docker Desktop settings, uncheck `General` -> `Use the WSL2 based engine`:
+
+![](https://playpit-labs-assets.s3-eu-west-1.amazonaws.com/screenshots/docker-settings-1.jpg)
 
 The next step is:
 
