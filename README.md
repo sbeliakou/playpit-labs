@@ -1,3 +1,11 @@
+# [DEPRECATED]
+
+> Every project approaches its end. 
+> 
+> I'm proud that this platform (and the idea in general) helped a lot of engineers to upgrade 202x core skills = Docker and Kubernetes, I've got a lot of positive feedback. Dozens of ideas were put into the backlog.
+> 
+> The main reason why I'm stopping the support of this product - it's getting a lot of time and efforts
+
 # Playpit Labs: Local Hands-on Playground
 
 **Playpit-Labs** is a learner-centric Training Platform which enables to facilitate a wide range of learning tasks (investigation, troubleshooting, development) via interactive module system. 
