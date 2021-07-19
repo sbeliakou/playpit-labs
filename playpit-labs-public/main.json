@@ -1,0 +1,124 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VNetTemplateSettings": {
+      "type": "object",
+      "metadata": {
+        "description": "The settings of Virtual Network Linked Template"
+      }
+    },
+    "VmTemplateSettings": {
+      "type": "object",
+      "metadata": {
+        "description": "The settings of Virtual Machine Linked Template"
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+      }
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Auto-generated token to access _artifactsLocation"
+      }
+    },
+    "keyVaultID": {
+      "type": "string"
+    },
+    "vmAdminUsername": {
+      "type": "string"
+    },
+    "vmAdminPassSecretName": {
+      "type": "string"
+    },
+    "DeploymentPrefix": {
+      "type": "string",
+      "defaultValue": "lab"
+    }
+  },
+  "variables": {
+    "VnetTemplateLink": "[concat(parameters('_artifactsLocation'), '/linked/', 'virtualNetwork.json', parameters('_artifactsLocationSasToken'))]",
+    "VMTemplateLink": "[concat(parameters('_artifactsLocation'), '/linked/', 'virtualMachine.json', parameters('_artifactsLocationSasToken'))]",
+    "uniqueName": "[concat(resourceGroup().name, '-', parameters('DeploymentPrefix'), '-')]"
+  },
+  "resources": [
+    { // Virtual Network
+      "name": "virtualNetwork",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-08-01",
+      "dependsOn": [
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VnetTemplateLink')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "uniqueName": {
+            "value": "[variables('uniqueName')]"
+          },
+          "VNetTemplateSettings": {
+            "value": "[parameters('VNetTemplateSettings')]"
+          }
+        }
+      }
+    },
+    { // Virtual Machine, NSG, Public IP, Network Interface
+      "name": "virtualMachine",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-08-01",
+      "dependsOn": [
+        "virtualNetwork"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('VMTemplateLink')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "uniqueName": {
+            "value": "[variables('uniqueName')]"
+          },
+          "VmTemplateSettings": {
+            "value": "[parameters('VmTemplateSettings')]"
+          },
+          "vmAdminUsername": {
+            "value": "[parameters('vmAdminUsername')]"
+          },
+          "vmAdminPassword": {
+            "reference": {
+              "keyVault": {
+                "id": "[parameters('keyVaultID')]"
+              },
+              "secretName": "[parameters('vmAdminPassSecretName')]"
+            }
+          },
+          "VirtualNetworkId": {
+            "value": "[reference('virtualNetwork').outputs.VirtualNetworkId.value]"
+          },
+          "VNetTemplateSettings": {
+            "value": "[parameters('VNetTemplateSettings')]"
+          },
+          "_artifactsLocation": {
+            "value": "[parameters('_artifactsLocation')]"
+          },
+          "_artifactsLocationSasToken": {
+            "value": "[parameters('_artifactsLocationSasToken')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "fqdn": {
+      "type": "string",
+      "value": "[reference('virtualMachine').outputs.fqdn.value]"
+    }
+  }
+}
